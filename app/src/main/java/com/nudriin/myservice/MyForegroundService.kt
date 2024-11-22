@@ -2,6 +2,7 @@ package com.nudriin.myservice
 
 import android.annotation.SuppressLint
 import android.app.Notification
+import android.app.Notification.FOREGROUND_SERVICE_IMMEDIATE
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -47,7 +48,7 @@ class MyForegroundService : Service() {
             }
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_DETACH)
-            }else{
+            } else {
                 stopForeground(true)
             }
             stopSelf()
@@ -79,6 +80,10 @@ class MyForegroundService : Service() {
             .setContentText("Saat ini foreground service sedang berjalan.")
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(pendingIntent)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            notificationBuilder.setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
