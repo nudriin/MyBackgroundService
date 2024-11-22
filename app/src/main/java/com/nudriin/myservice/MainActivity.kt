@@ -1,5 +1,6 @@
 package com.nudriin.myservice
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,5 +15,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val serviceIntent = Intent(this, MyBackgroundService::class.java)
+
+        binding.btnStartBackgroundService.setOnClickListener {
+            startService(serviceIntent)
+        }
+
+        binding.btnStopBackgroundService.setOnClickListener {
+            stopService(serviceIntent)
+        }
     }
 }
